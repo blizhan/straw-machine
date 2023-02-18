@@ -15,7 +15,7 @@ class operator:
 class estimator(BaseEstimator, TransformerMixin):
     def __init__(
         self,
-        oper: operator
+        oper: operator,
     ):
         self.oper = oper
         self.name = oper.name
@@ -40,20 +40,3 @@ class estimator(BaseEstimator, TransformerMixin):
     def get_feature_names_out(self, name):
         return self.oper.outputs
 
-def generate_estimator(
-        name: str,
-        func: Callable,
-        inputs: List[str],
-        outputs: List[str],
-        kw_args: Dict[str, object]=None
-    ) -> estimator:
-
-    oper = operator(
-        name=name,
-        func=func,
-        inputs=inputs,
-        outputs=outputs,
-        kw_args=kw_args
-    )
-    e = estimator(oper)
-    return e
