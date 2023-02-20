@@ -2,7 +2,7 @@ from straw_machine.dataclass import estimator
 
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-import joblib
+import cloudpickle
 
 from dataclasses import dataclass
 from typing import List
@@ -29,7 +29,8 @@ class pipeline(Pipeline):
         dir = os.path.dirname(savepath)
         if len(dir):
             os.makedirs(dir, exist_ok=True)
-        joblib.dump(self, savepath, **kwargs)
+        with open(savepath, 'wb') as f:
+            cloudpickle.dump(self, f, **kwargs)
 
 
 class transformer(ColumnTransformer):
@@ -50,7 +51,8 @@ class transformer(ColumnTransformer):
         dir = os.path.dirname(savepath)
         if len(dir):
             os.makedirs(dir, exist_ok=True)
-        joblib.dump(self, savepath, **kwargs)
+        with open(savepath, 'wb') as f:
+            cloudpickle.dump(self, f, **kwargs)
 
     def __add__(self, trans) -> pipeline:
         if isinstance(trans, transformer):

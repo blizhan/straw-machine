@@ -16,6 +16,7 @@ class estimator(BaseEstimator, TransformerMixin):
     def __init__(
         self,
         oper: operator,
+        **kwargs
     ):
         self.oper = oper
         self.name = oper.name
