@@ -10,7 +10,7 @@ A python making machine of sklearn pipeline. This python package tempt to lower 
 ### Install
 
 ```shell
-pip install straw_machine==0.0.1
+pip install straw_machine==0.0.2
 ```
 
 ### [Usage](example/example.ipynb)
