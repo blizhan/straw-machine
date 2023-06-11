@@ -25,12 +25,14 @@ def generate_estimator(
 def generate_transformer(
     name:str,
     estimators: List[estimator],
+    remain_other: bool=True,
     **kwargs,
 ) -> transformer:
 
     s = step(
         name=name,
-        estimators=estimators
+        estimators=estimators,
+        remain_other=remain_other,
     )
     return transformer(s, **kwargs)
 

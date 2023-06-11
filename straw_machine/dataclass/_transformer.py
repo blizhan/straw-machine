@@ -12,6 +12,7 @@ import os
 class step:
     name: str
     estimators: List[estimator]
+    remain_other: bool
 
 class pipeline(Pipeline):
     def __init__(self, steps, *, memory=None, verbose=False):
@@ -35,13 +36,19 @@ class pipeline(Pipeline):
 
 class transformer(ColumnTransformer):
     def __init__(self, transform_step:step, **kwargs):
+        """transformer 
+
+        Args:
+            transform_step (step): single transform step that contains multi estimators
+            remain_other (bool, optional): remain other columns or not. Defaults to True.
+        """
         self.name = transform_step.name
-        self.transform_step = step
+        self.transform_step = transform_step
         self.cols_tranform_list = [(e.name, e, e.inputs) for e in transform_step.estimators]
 
         super().__init__(
             transformers=self.cols_tranform_list,
-            remainder='passthrough',
+            remainder= 'passthrough' if transform_step.remain_other else 'drop',
             verbose_feature_names_out=False,
             # **kwargs
         )
